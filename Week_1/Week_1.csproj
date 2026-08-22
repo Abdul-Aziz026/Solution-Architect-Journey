@@ -8,8 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Abstraction\Bad Example\" />
-    <Folder Include="Abstraction\Good Example\" />
     <Folder Include="Cohesion\Bad Example\" />
     <Folder Include="Cohesion\Good Example\" />
     <Folder Include="Composition\Bad Example\" />

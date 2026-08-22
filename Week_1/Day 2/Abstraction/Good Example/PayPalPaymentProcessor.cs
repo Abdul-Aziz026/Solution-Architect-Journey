@@ -1,6 +1,6 @@
 ﻿namespace Week_1.Day_2.Abstraction.Good_Example;
 
-public class PayPalPaymentService : IPaymentService
+public class PayPalPaymentProcessor : IPaymentProcessor
 {
     public void ProcessPayment(decimal amount)
     {
