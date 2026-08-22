@@ -1,0 +1,13 @@
+# ======================
+# Backend (ASP.NET Core)
+# ======================
+**/.vs
+**/bin
+**/obj
+**/*.user
+**/Logs/*
+**/temp
+**/appsettings.Development.json
+**/appsettings.Production.json
+**/appsettings.Test.json
+**/*.slnx
