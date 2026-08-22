@@ -18,7 +18,6 @@
     <Folder Include="Coupling\Good Example\" />
     <Folder Include="Inheritance\Bad Example\" />
     <Folder Include="Inheritance\Good Example\" />
-    <Folder Include="Day 1\Object-Oriented Design Fundamentals\" />
     <Folder Include="Polymorphism\Bad Example\" />
     <Folder Include="Polymorphism\Good Example\" />
   </ItemGroup>
