@@ -10,14 +10,8 @@
   <ItemGroup>
     <Folder Include="Cohesion\Bad Example\" />
     <Folder Include="Cohesion\Good Example\" />
-    <Folder Include="Composition\Bad Example\" />
-    <Folder Include="Composition\Good Example\" />
     <Folder Include="Coupling\Bad Example\" />
     <Folder Include="Coupling\Good Example\" />
-    <Folder Include="Inheritance\Bad Example\" />
-    <Folder Include="Inheritance\Good Example\" />
-    <Folder Include="Polymorphism\Bad Example\" />
-    <Folder Include="Polymorphism\Good Example\" />
   </ItemGroup>
 
 </Project>
