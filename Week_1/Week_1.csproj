@@ -7,11 +7,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="Cohesion\Bad Example\" />
-    <Folder Include="Cohesion\Good Example\" />
-    <Folder Include="Coupling\Bad Example\" />
-    <Folder Include="Coupling\Good Example\" />
-  </ItemGroup>
-
 </Project>
