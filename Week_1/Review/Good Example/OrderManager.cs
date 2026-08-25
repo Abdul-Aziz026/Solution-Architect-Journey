@@ -3,7 +3,7 @@
 public class OrderManager
 {
     // Encapsulation
-    private List<Order> _orders = new();
+    private readonly List<Order> _orders = new();
 
     // prevent external modification
     public IReadOnlyList<Order> Orders => _orders.AsReadOnly();
