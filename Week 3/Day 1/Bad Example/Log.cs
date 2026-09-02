@@ -5,15 +5,13 @@ public class OrderService
 {
     public void CreateOrder()
     {
-        Console.WriteLine("Order Creating...");
+        // log before
+        Console.WriteLine("Order Process...");
+
+        // execute order service
+        // ... order service logic
+
+        // log after
+        Console.WriteLine("Order Processed.");
     }
 }
-
-// Task:
-// can't modify orderservice:
-// log before
-// execute order service
-// log after
-
-
-// solution wrap object...

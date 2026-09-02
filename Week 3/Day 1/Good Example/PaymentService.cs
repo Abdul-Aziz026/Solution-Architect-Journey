@@ -1,4 +1,4 @@
-﻿
+﻿// Strategy pattern...
 namespace Week_3.Day_1.Good_Example;
 
 public class PaymentService

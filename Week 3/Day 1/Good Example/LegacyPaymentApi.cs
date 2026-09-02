@@ -1,4 +1,6 @@
-﻿using System.ComponentModel;
+﻿// Adapter pattern...
+
+using System.ComponentModel;
 
 namespace Week_3.Day_1.Good_Example;
 

@@ -1,4 +1,5 @@
-﻿
+﻿// Factory Pattern...
+
 using System.Collections;
 
 namespace Week_3.Day_1.Good_Example;
@@ -26,8 +27,7 @@ public class NotificationFactory
         return type switch
         {
             "email" => new EmailNotification(),
-            "sms" => new SmsNotification(),
-            _ => new NotSupportedException("")
+            "sms" => new SmsNotification()
         };
     }
 }
