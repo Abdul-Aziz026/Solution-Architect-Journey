@@ -1,0 +1,33 @@
+{
+  "mcpServers": {
+    "pillar2-research": {
+      "enabled": false,
+      "description": "Pillar 2 Research MCP - OECD tax implementation research"
+    },
+    "apollo": {
+      "enabled": false,
+      "description": "Apollo MCP - Project management integration"
+    },
+    "asana": {
+      "enabled": false,
+      "description": "Asana MCP - Task and project management"
+    },
+    "github": {
+      "enabled": false,
+      "description": "GitHub MCP - Repository and issue management"
+    },
+    "slack": {
+      "enabled": false,
+      "description": "Slack MCP - Slack workspace integration"
+    }
+  },
+  "defaults": {
+    "timeout": 30000,
+    "retries": 3,
+    "logging": "info"
+  },
+  "authentication": {
+    "method": "oauth2",
+    "storeCredentials": false
+  }
+}

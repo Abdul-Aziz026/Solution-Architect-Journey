@@ -1,0 +1,46 @@
+{
+  "name": "Claude Code Mastery",
+  "description": "Solution Architect Journey - Claude Code learning and development",
+  "version": "1.0.0",
+  "model": "claude-opus-5",
+  "theme": "auto",
+  "permissions": {
+    "allow": [
+      "bash",
+      "git",
+      "npm",
+      "node",
+      "read",
+      "edit",
+      "write"
+    ],
+    "unsafe": false
+  },
+  "hooks": {
+    "pre-commit": {
+      "enabled": false
+    }
+  },
+  "cli": {
+    "terminal": "pwsh",
+    "editor": "code"
+  },
+  "artifacts": {
+    "auto-publish": false,
+    "private": true
+  },
+  "mcp": {
+    "enabled": true,
+    "config": ".mcp.json"
+  },
+  "customAgents": {
+    "path": "agents"
+  },
+  "customSkills": {
+    "path": "skills"
+  },
+  "environment": {
+    "NODE_ENV": "development",
+    "DEBUG": false
+  }
+}

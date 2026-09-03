@@ -131,3 +131,137 @@ Consumer → Factory → Abstraction → Concrete A / B / C
 4. Factory alone doesn't guarantee OCP.
 
 > **One-liner:** *Don't let business code decide how objects are created — delegate that to a Factory.*
+
+# Dependency Graphs: Simple Factory vs Factory Method
+
+## Simple Factory
+
+A single factory class knows about *all* concrete products and decides which one to instantiate. The client depends on the factory, and the factory depends on every concrete product.
+
+```mermaid
+classDiagram
+    class Client
+    class SimpleFactory {
+        +createProduct(type) Product
+    }
+    class Product {
+        <<interface>>
+        +operation()
+    }
+    class ConcreteProductA
+    class ConcreteProductB
+
+    Client --> SimpleFactory : uses
+    Client ..> Product : depends on (return type)
+    SimpleFactory ..> ConcreteProductA : creates
+    SimpleFactory ..> ConcreteProductB : creates
+    ConcreteProductA ..|> Product
+    ConcreteProductB ..|> Product
+```
+
+**Dependency direction:** `Client → SimpleFactory → {ConcreteProductA, ConcreteProductB}`
+Adding a new product means **modifying** `SimpleFactory` (violates Open/Closed Principle).
+
+### Sequence of a Typical Call
+
+```mermaid
+sequenceDiagram
+    participant Client
+    participant SimpleFactory
+    participant ConcreteProductA
+
+    Client->>SimpleFactory: createProduct("A")
+    SimpleFactory->>SimpleFactory: check type param
+    SimpleFactory->>ConcreteProductA: new ConcreteProductA()
+    ConcreteProductA-->>SimpleFactory: instance
+    SimpleFactory-->>Client: Product (as ConcreteProductA)
+    Client->>ConcreteProductA: operation()
+    ConcreteProductA-->>Client: result
+```
+
+Note the extra `check type param` step inside `SimpleFactory` — it needs conditional logic (if/switch) to decide *which* concrete class to instantiate, since one class is responsible for all products.
+
+---
+
+## Factory Method
+
+Each concrete creator is responsible for exactly one product. The client depends only on the abstract `Creator`, and each `ConcreteCreator` depends on its own `ConcreteProduct` — no single class knows about all products.
+
+```mermaid
+classDiagram
+    class Client
+    class Creator {
+        <<abstract>>
+        +factoryMethod() Product
+        +someOperation()
+    }
+    class ConcreteCreatorA {
+        +factoryMethod() Product
+    }
+    class ConcreteCreatorB {
+        +factoryMethod() Product
+    }
+    class Product {
+        <<interface>>
+        +operation()
+    }
+    class ConcreteProductA
+    class ConcreteProductB
+
+    Client --> Creator : uses
+    ConcreteCreatorA --|> Creator
+    ConcreteCreatorB --|> Creator
+    ConcreteCreatorA ..> ConcreteProductA : creates
+    ConcreteCreatorB ..> ConcreteProductB : creates
+    ConcreteProductA ..|> Product
+    ConcreteProductB ..|> Product
+```
+
+**Dependency direction:** `Client → Creator ← {ConcreteCreatorA, ConcreteCreatorB} → own Product only`
+Adding a new product means **adding** a new `ConcreteCreator`/`ConcreteProduct` pair, no existing class is touched (follows Open/Closed Principle).
+
+### Sequence of a Typical Call
+
+```mermaid
+sequenceDiagram
+    participant Client
+    participant Creator as Creator (abstract)
+    participant ConcreteCreatorA
+    participant ConcreteProductA
+
+    Client->>ConcreteCreatorA: new ConcreteCreatorA()
+    Note over Client,ConcreteCreatorA: Client stores it as a Creator reference
+
+    Client->>Creator: someOperation()
+    Note right of Creator: someOperation() is defined once<br/>in Creator (template method)
+
+    Creator->>ConcreteCreatorA: factoryMethod()
+    Note over Creator,ConcreteCreatorA: Polymorphic dispatch:<br/>the abstract call resolves to<br/>ConcreteCreatorA's override at runtime
+
+    ConcreteCreatorA->>ConcreteProductA: new ConcreteProductA()
+    ConcreteProductA-->>ConcreteCreatorA: instance
+    ConcreteCreatorA-->>Creator: returns Product (as ConcreteProductA)
+
+    Creator->>ConcreteProductA: product.operation()
+    ConcreteProductA-->>Creator: result
+
+    Creator-->>Client: result
+```
+
+**How to read this:**
+1. The `Client` only ever creates a `ConcreteCreatorA`, but immediately treats it as a `Creator` — it never calls anything `ConcreteCreatorA`-specific again.
+2. `someOperation()` (the "template method") lives in `Creator` and is written **once**, using `this.factoryMethod()` internally without knowing which concrete class it's running on.
+3. At runtime, that call **polymorphically resolves** to `ConcreteCreatorA.factoryMethod()` — this is the core trick of the pattern: the abstract class calls a method it doesn't implement, and the concrete subclass supplies the missing piece.
+4. No `if`/`switch` anywhere — swap in `ConcreteCreatorB` instead and the exact same `someOperation()` flow produces a `ConcreteProductB` instead, with zero code changes to `Creator`.
+
+---
+
+## Key Difference at a Glance
+
+| Aspect | Simple Factory | Factory Method |
+|---|---|---|
+| Number of creator classes | 1 (concrete) | 1 abstract + N concrete |
+| Who knows all products? | The single factory | No one — each creator knows only its own product |
+| Extending with a new product | Modify existing factory | Add new subclass, no existing code touched |
+| Coupling | Client → 1 concrete factory | Client → abstract creator only |
+| Pattern category | Not a GoF pattern (idiom) | GoF Creational Pattern |
