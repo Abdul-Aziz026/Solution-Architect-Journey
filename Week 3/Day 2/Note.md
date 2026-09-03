@@ -108,7 +108,7 @@ To fix that, you'd move toward DI, a registration dictionary, or Strategy patter
 - **Simple Factory** — one class decides what to create (`factory.Create("bkash")`)
 - **Factory Method** — subclasses decide what to create
 
-You don't need to master the difference yet — just know they exist.
+**See the Example for Details understand**
 
 ---
 
